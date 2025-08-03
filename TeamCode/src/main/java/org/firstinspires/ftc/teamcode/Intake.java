@@ -5,30 +5,38 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
-    enum state{
+    enum Slidestate{
         MAX, MIN
     }
-    public state currentState;
-    public void setState(state State){
+
+    public Slidestate currentState;
+    public void setState(Slidestate State){
         currentState.equals(State);
     }
-    HardwareMapping key = new HardwareMapping();
-        public Servo right;
-        public Servo left;
-    public Intake() {
-        right = hardwareMap.get(Servo.class, key.intakeServoR);
-        left = hardwareMap.get(Servo.class, key.intakeServoL);
-    }
     public void toMAXPos(){
-        setState(state.MAX);
+        setState(Slidestate.MAX);
         left.setPosition(1);
         right.setPosition(1);
     }
     public void toMINPos(){
-        setState(state.MIN);
+        setState(Slidestate.MIN);
         left.setPosition(0);
         right.setPosition(0);
     }
+    HardwareMapping key = new HardwareMapping();
+        public Servo right;
+        public Servo left;
+
+    public Intake() {
+        right = hardwareMap.get(Servo.class, key.intakeServoR);
+        left = hardwareMap.get(Servo.class, key.intakeServoL);
+    }
+
+    enum ArmState {
+        PICKUP, INIT, TRANSFER,
+    }
+
+
     /**
      * moves the slides to a specific position based on the input
      * @param pos is Centimeters
